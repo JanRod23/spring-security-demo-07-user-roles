@@ -20,15 +20,18 @@ public class DemoSecurityConfig extends WebSecurityConfigurerAdapter {
 		
 		auth.inMemoryAuthentication()
 			.withUser(users.username("john").password("test123").roles("EMPLOYEE"))
-			.withUser(users.username("mary").password("test123").roles("MANAGER"))
-			.withUser(users.username("susan").password("test123").roles("ADMIN"));
+			.withUser(users.username("mary").password("test123").roles("EMPLOYEE", "MANAGER"))
+			.withUser(users.username("susan").password("test123").roles("EMPLOYEE", "ADMIN"));
 	}
 
 	@Override
 	protected void configure(HttpSecurity http) throws Exception {
 		
 		http.authorizeRequests()
-				.anyRequest().authenticated() // Any request coming in must be authenticated
+				/** .anyRequest().authenticated() // Any request coming in must be authenticated **/
+				.antMatchers("/").hasRole("EMPLOYEE") // for the "/" path, user must be EMPLOYEE (configs are in configure method)
+				.antMatchers("/leaders/**").hasRole("MANAGER") // the ** means any sub directory of the "/leaders" pathsystems/**
+				.antMatchers("/systems/**").hasRole("ADMIN")
 			.and()
 			.formLogin() // Customize the login form
 				.loginPage("/showMyLoginPage") // Mapping for login page
