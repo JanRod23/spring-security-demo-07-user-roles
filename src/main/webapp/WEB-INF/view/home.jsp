@@ -22,10 +22,18 @@
 			</p>
 		<hr />
 		
-		<!-- Add a link to point to /leaders for the managers -->
+		<!-- Add a link to point to /leaders for the MANAGERS -->
 		<p>
 			<a href="${pageContext.request.contextPath}/leaders">Leadership Meeting</a>
 			(Only for Managers)
+		</p>
+		
+		<hr />
+		
+		<!-- Add a link to point to /systems only for ADMINS -->
+		<p>
+			<a href="${pageContext.request.contextPath}/systems">IT Systems Meeting</a>
+			(Only for Admins)
 		</p>
 		
 		<hr />
